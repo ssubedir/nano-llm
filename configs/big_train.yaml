@@ -1,0 +1,56 @@
+# Long Test Configuration
+# This configuration is optimized for longer training runs and better performance
+# Uses larger models and more steps for serious training
+
+# Global settings
+global:
+  device: "auto"
+
+# Tokenizer configuration - larger vocabulary
+tokenizer:
+  input_files: ["dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.train.raw","dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.test.raw","dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.valid.raw"]
+  output_dir: "big_tokenizer_output"
+  vocab_size: 20000  # Larger vocabulary for better coverage
+
+# Training configuration - larger model for better performance
+train:
+  tokenizer_path: "big_tokenizer_output"
+  data_files: ["dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.train.raw"]
+  total_steps: 5000  # More steps for thorough training
+  batch_size: 16     # Larger batch size
+  learning_rate: 0.0005  # Lower learning rate for stable training
+  output_dir: "big_model_output"
+  max_seq_len: 128   # Longer sequences
+  dynamic_padding: true  # Enable dynamic padding for efficiency
+  pad_to_multiple: 8    # Pad to multiples of 8 for GPU efficiency
+  d_model: 512       # Larger model
+  n_layers: 6        # More layers
+  n_heads: 8         # More attention heads
+  d_ff: 2048         # Larger feed-forward
+  dropout: 0.1
+  checkpoint_interval: 500  # Save checkpoints less frequently
+  eval_interval: 500
+  max_training_hours: null  # No time limit for long tests
+  auto_resume: true         # Enable auto-resume
+
+# Evaluation configuration
+eval:
+  model_path: "big_model_output"
+  tokenizer_path: "big_tokenizer_output"
+  data_files: ["dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.valid.raw"]
+  batch_size: 16
+  max_samples: null  # Evaluate on all samples
+
+# Generation configuration
+generate:
+  model_path: "big_model_output"
+  tokenizer_path: "big_tokenizer_output"
+  prompt: "In the beginning"
+  max_new_tokens: 200  # Longer generation
+  temperature: 0.7
+  do_sample: true
+  top_k: 50
+  top_p: 0.9
+  repetition_penalty: 1.1  # Moderate penalty for longer generations
+  num_samples: 3
+  show_prompt: true

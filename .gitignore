@@ -205,3 +205,8 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.test.raw
+dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.train.raw
+dataset/wikitext-103-raw-v1/wikitext-103-raw/wiki.valid.raw
+*small_tokenizer_output/*
+*small_model_output/*
